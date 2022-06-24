@@ -1,0 +1,1 @@
+# rental_cottages_api
