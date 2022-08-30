@@ -4,13 +4,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "build": "cd react-ui/ && npm install && npm run build"
+    "start": "node server.js"
   },
-  "cacheDirectories": [
-    "node_modules",
-    "react-ui/node_modules"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JuusoMRusanen/rental_cottages.git"
