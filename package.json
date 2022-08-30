@@ -2,7 +2,7 @@
   "name": "rental_cottages",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
