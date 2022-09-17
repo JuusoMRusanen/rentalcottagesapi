@@ -41,7 +41,7 @@ module.exports = db;
 
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data
-db.sequelize.sync({force: true}).then(() => { // Removes former data
+db.sequelize.sync().then(() => { // Removes former data
 
   // Require mockdata
   const city = require("../mockdata/city.json")
