@@ -8,6 +8,23 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+const express = require("express");
+const cors = require("cors");
+const app = express();
+
+// cors origin depends on environment
+var corsOptions = { 
+  origin: process.env.NODE_ENV === "production" ? "https://bezk1.herokuapp.com" : "http://localhost:8080"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -69,4 +86,12 @@ db.sequelize.sync().then(() => { // Removes former data
 })
 .catch((err) => {
   console.log(err)
+});
+
+require("../routes/cottage.routes")(app);
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });

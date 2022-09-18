@@ -1,7 +1,7 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
-const Cottage = db.cottages;
+const Cottage = db.cottage;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Cottage
