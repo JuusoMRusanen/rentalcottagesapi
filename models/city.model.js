@@ -1,8 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define("city", {
-    regionId: {
+    id: {
       type: Sequelize.STRING,
-      allowNull: false
+      primaryKey: true
     },
     name: {
       type: Sequelize.STRING,

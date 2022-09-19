@@ -14,7 +14,7 @@ const app = express();
 
 // cors origin depends on environment
 var corsOptions = { 
-  origin: process.env.NODE_ENV === "production" ? "https://bezk1.herokuapp.com" : "http://localhost:8080"
+  origin: process.env.NODE_ENV === "production" ? "https://rentalcottages.herokuapp.com" : "http://localhost:8080"
 };
 
 app.use(cors(corsOptions));
@@ -56,9 +56,21 @@ db.Sequelize = Sequelize;
 
 module.exports = db;
 
+// List models
+const City = db.sequelize.models.city;
+const Cottage_photo = db.sequelize.models.cottage_photo;
+const Cottage = db.sequelize.models.cottage;
+const Photo = db.sequelize.models.photo;
+const Region = db.sequelize.models.region;
+const Review = db.sequelize.models.review;
+
+// Create associations
+Region.hasMany(City)
+City.belongsTo(Region)
+
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data
-db.sequelize.sync().then(() => { // Removes former data
+db.sequelize.sync({ force: true }).then(() => { // Removes former data
 
   // Require mockdata
   const city = require("../mockdata/city.json")
@@ -69,13 +81,14 @@ db.sequelize.sync().then(() => { // Removes former data
   const review = require("../mockdata/review.json")
 
   // Insert mockdata
+  // CREATION ORDER MUST BE ACCORDING TO ASSOCIATIONS
   return(
-    db.sequelize.models.city.bulkCreate(city),
-    db.sequelize.models.cottage_photo.bulkCreate(cottage_photo),
-    db.sequelize.models.cottage.bulkCreate(cottage),
-    db.sequelize.models.photo.bulkCreate(photo),
-    db.sequelize.models.region.bulkCreate(region),
-    db.sequelize.models.review.bulkCreate(review)
+    Region.bulkCreate(region),
+    City.bulkCreate(city),
+    Cottage.bulkCreate(cottage),
+    Photo.bulkCreate(photo),
+    Cottage_photo.bulkCreate(cottage_photo),
+    Review.bulkCreate(review)
   );
 
 })
