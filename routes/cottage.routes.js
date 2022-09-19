@@ -1,25 +1,25 @@
 module.exports = app => {
-  const cottages = require("../controllers/cottage.controller.js");
+  const cottage = require("../controllers/cottage.controller.js");
 
   var router = require("express").Router();
 
   // Create a new Cottage
-  router.post("/", cottages.create);
+  router.post("/", cottage.create);
 
-  // Retrieve all cottages
-  router.get("/", cottages.findAll);
+  // Retrieve all cottage
+  router.get("/", cottage.findAll);
 
   // Retrieve a single Cottage with id
-  router.get("/:id", cottages.findOne);
+  router.get("/:id", cottage.findOne);
 
   // Update a Cottage with id
-  router.put("/:id", cottages.update);
+  router.put("/:id", cottage.update);
 
   // Delete a Cottage with id
-  router.delete("/:id", cottages.delete);
+  router.delete("/:id", cottage.delete);
 
-  // Delete all cottages
-  router.delete("/", cottages.deleteAll);
+  // Delete all cottage
+  router.delete("/", cottage.deleteAll);
 
-  app.use("/api/cottages", router);
+  app.use("/api/cottage", router);
 };
