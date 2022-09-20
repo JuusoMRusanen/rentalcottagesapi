@@ -1,25 +1,25 @@
 module.exports = app => {
-  const region = require("../controllers/region.controller.js");
+  const review = require("../controllers/review.controller.js");
 
   var router = require("express").Router();
 
-  // Create a new Cottage
-  router.post("/", region.create);
+  // Create a new Review
+  router.post("/", review.create);
 
-  // Retrieve all region
-  router.get("/", region.findAll);
+  // Retrieve all Review
+  router.get("/", review.findAll);
 
-  // Retrieve a single Cottage with id
-  router.get("/:id", region.findOne);
+  // Retrieve a single Review with id
+  router.get("/:id", review.findOne);
 
-  // Update a Cottage with id
-  router.put("/:id", region.update);
+  // Update a Review with id
+  router.put("/:id", review.update);
 
-  // Delete a Cottage with id
-  router.delete("/:id", region.delete);
+  // Delete a Review with id
+  router.delete("/:id", review.delete);
 
-  // Delete all region
-  router.delete("/", region.deleteAll);
+  // Delete all Review
+  router.delete("/", review.deleteAll);
 
-  app.use("/api/region", router);
+  app.use("/api/review", router);
 };

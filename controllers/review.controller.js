@@ -38,8 +38,8 @@ exports.create = (req, res) => {
 
 // Retrieve all reviews from the database.
 exports.findAll = (req, res) => {
-  const src = req.body.src;
-  var condition = src ? { src: { [Op.iLike]: `%${src}%` } } : null;
+  const cottageId = req.body.cottageId;
+  var condition = cottageId ? { cottageId: { [Op.iLike]: `%${cottageId}%` } } : null;
 
   Review.findAll({ where: condition })
     .then(data => {

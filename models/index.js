@@ -25,6 +25,9 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// Serves resources from public folder
+app.use(express.static(__dirname + '/../public'));
+
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -107,7 +110,13 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
   console.log(err)
 });
 
+// Enable routes
+require("../routes/city.routes")(app);
+require("../routes/cottage_photo.routes")(app);
 require("../routes/cottage.routes")(app);
+require("../routes/photo.routes")(app);
+require("../routes/region.routes")(app);
+require("../routes/review.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
