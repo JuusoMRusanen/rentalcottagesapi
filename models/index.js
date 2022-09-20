@@ -71,8 +71,8 @@ City.hasMany(Cottage)
 Cottage.belongsTo(City)
 Cottage.hasMany(Review)
 Review.belongsTo(Cottage)
-Cottage.belongsToMany(Photo, { through: 'Cottage_photo' })
-Photo.belongsToMany(Cottage, { through: 'Cottage_photo' })
+Cottage.belongsToMany(Photo, { through: Cottage_photo })
+Photo.belongsToMany(Cottage, { through: Cottage_photo })
 
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data
