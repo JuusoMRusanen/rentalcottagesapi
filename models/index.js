@@ -14,7 +14,7 @@ const app = express();
 
 // cors origin depends on environment
 var corsOptions = { 
-  origin: process.env.NODE_ENV === "production" ? "https://rentalcottages.herokuapp.com" : "http://localhost:8080"
+  origin: process.env.NODE_ENV === "production" ? "https://rentalcottages.herokuapp.com" : "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
