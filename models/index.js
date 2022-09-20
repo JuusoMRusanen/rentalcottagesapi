@@ -64,9 +64,15 @@ const Photo = db.sequelize.models.photo;
 const Region = db.sequelize.models.region;
 const Review = db.sequelize.models.review;
 
-// Create associations
+// Associations
 Region.hasMany(City)
 City.belongsTo(Region)
+City.hasMany(Cottage)
+Cottage.belongsTo(City)
+Cottage.hasMany(Review)
+Review.belongsTo(Cottage)
+Cottage.belongsToMany(Photo, { through: 'Cottage_photo' })
+Photo.belongsToMany(Cottage, { through: 'Cottage_photo' })
 
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data

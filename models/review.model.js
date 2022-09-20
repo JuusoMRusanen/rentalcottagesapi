@@ -1,6 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define("review", {
-    cottageId: {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    cottageID: {
       type: Sequelize.INTEGER,
       allowNull: false
     },

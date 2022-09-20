@@ -1,8 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define("region", {
     id: {
-      type: Sequelize.STRING,
-      primaryKey: true
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     name: {
       type: Sequelize.STRING,

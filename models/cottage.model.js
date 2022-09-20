@@ -1,5 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define("cottage", {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
+    },
     cityId: {
       type: Sequelize.INTEGER,
       allowNull: false
