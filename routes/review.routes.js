@@ -21,5 +21,5 @@ module.exports = app => {
   // Delete all Review
   router.delete("/", review.deleteAll);
 
-  app.use("/api/review", router);
+  app.use("/api/reviews", router);
 };

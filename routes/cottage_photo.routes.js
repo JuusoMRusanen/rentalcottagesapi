@@ -21,5 +21,5 @@ module.exports = app => {
   // Delete all cottage_photo
   router.delete("/", cottage_photo.deleteAll);
 
-  app.use("/api/cottage_photo", router);
+  app.use("/api/cottage_photos", router);
 };

@@ -21,5 +21,5 @@ module.exports = app => {
   // Delete all cottage
   router.delete("/", cottage.deleteAll);
 
-  app.use("/api/cottage", router);
+  app.use("/api/cottages", router);
 };

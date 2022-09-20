@@ -21,5 +21,5 @@ module.exports = app => {
   // Delete all photo
   router.delete("/", photo.deleteAll);
 
-  app.use("/api/photo", router);
+  app.use("/api/photos", router);
 };
