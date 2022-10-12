@@ -1,6 +1,8 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
+const { QueryTypes } = require('sequelize');
+
 const Cottage = db.cottage;
 const Op = db.Sequelize.Op;
 
@@ -38,20 +40,12 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all cottages from the database.
-exports.findAll = (req, res) => {
-  const name = req.body.name;
-  var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
+exports.findAll = async (req, res) => {
 
-  Cottage.findAll({ where: condition })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving cottages."
-      });
-    });
+  const cottages = await Cottage.sequelize.query(`SELECT *, cottage.id AS "cottageId", region.id AS "regionId", city.name AS "cityName", region.name AS "regionName", cottage.name AS "cottageName" FROM cottage JOIN city ON "cityId" = city.id JOIN region ON "regionId" = region.id`, { type: QueryTypes.SELECT })
+  .then(data => {
+    res.send(data);
+  });
 };
 
 // Find a single Cottage with an id
