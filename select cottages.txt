@@ -1,0 +1,1 @@
+SELECT *, cottage.id AS "cottageId", region.id AS "regionId", city.name AS "cityName", region.name AS "regionName", cottage.name AS "cottageName" FROM cottage JOIN city ON "cityId" = city.id JOIN region ON "regionId" = region.id;
