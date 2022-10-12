@@ -1,6 +1,8 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
+const { QueryTypes } = require('sequelize');
+
 const Photo = db.photo;
 const Op = db.Sequelize.Op;
 
@@ -33,7 +35,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all photos from the database.
+/* // Retrieve all photos from the database.
 exports.findAll = (req, res) => {
   const src = req.body.src;
   var condition = src ? { src: { [Op.iLike]: `%${src}%` } } : null;
@@ -48,6 +50,17 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving photos."
       });
     });
+}; */
+
+// Retrieve all photos from the database.
+exports.findAll = async (req, res) => {
+
+  console.log(req.query.cottageId);
+
+  const photos = await Photo.sequelize.query(`SELECT * FROM cottage_photo JOIN photo ON "photoId" = photo.id WHERE "cottageId" IN (?)`, { replacements: [req.query.cottageId], type: QueryTypes.SELECT })
+  .then(data => {
+    res.send(data);
+  });
 };
 
 // Find a single Photo with an id
