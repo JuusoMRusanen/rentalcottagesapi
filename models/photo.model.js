@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       allowNull: false
     },
+    cottageId: {
+      type: Sequelize.INTEGER
+    },
     src: {
       type: Sequelize.STRING
     },
