@@ -61,7 +61,6 @@ module.exports = db;
 
 // List models
 const City = db.sequelize.models.city;
-const Cottage_photo = db.sequelize.models.cottage_photo;
 const Cottage = db.sequelize.models.cottage;
 const Photo = db.sequelize.models.photo;
 const Region = db.sequelize.models.region;
@@ -74,8 +73,8 @@ City.hasMany(Cottage)
 Cottage.belongsTo(City)
 Cottage.hasMany(Review)
 Review.belongsTo(Cottage)
-Cottage.belongsToMany(Photo, { through: Cottage_photo })
-Photo.belongsToMany(Cottage, { through: Cottage_photo })
+Cottage.hasMany(Photo)
+Photo.belongsTo(Cottage)
 
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data
@@ -83,7 +82,6 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
 
   // Require mockdata
   const city = require("../mockdata/city.json")
-  const cottage_photo = require("../mockdata/cottage_photo.json")
   const cottage = require("../mockdata/cottage.json")
   const photo = require("../mockdata/photo.json")
   const region = require("../mockdata/region.json")
@@ -96,7 +94,6 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
     City.bulkCreate(city),
     Cottage.bulkCreate(cottage),
     Photo.bulkCreate(photo),
-    Cottage_photo.bulkCreate(cottage_photo),
     Review.bulkCreate(review)
   );
 
@@ -112,7 +109,6 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
 
 // Enable routes
 require("../routes/city.routes")(app);
-require("../routes/cottage_photo.routes")(app);
 require("../routes/cottage.routes")(app);
 require("../routes/photo.routes")(app);
 require("../routes/region.routes")(app);
