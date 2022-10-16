@@ -1,7 +1,7 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
-const { QueryTypes } = require('sequelize');
+const { QueryTypes, INTEGER } = require('sequelize');
 
 const Cottage = db.cottage;
 const Op = db.Sequelize.Op;
@@ -42,31 +42,55 @@ exports.create = (req, res) => {
 // Retrieve all cottages from the database.
 exports.findAll = async (req, res) => {
 
-  const cottages = await Cottage.sequelize.query(`SELECT *, cottage.id AS "cottageId", region.id AS "regionId", city.name AS "cityName", region.name AS "regionName", cottage.name AS "cottageName" FROM cottage JOIN city ON "cityId" = city.id JOIN region ON "regionId" = region.id`, { type: QueryTypes.SELECT })
+  await Cottage.sequelize.query(
+    'SELECT *, '+
+    'cottage.id AS "cottageId", '+
+    'region.id AS "regionId", '+
+    'city.name AS "cityName", '+
+    'region.name AS "regionName", '+ 
+    'cottage.name AS "cottageName" '+ 
+    'FROM cottage '+
+    'JOIN city ON "cityId" = city.id '+
+    'JOIN region ON "regionId" = region.id',
+    { type: QueryTypes.SELECT })
   .then(data => {
     res.send(data);
   });
 };
 
 // Find a single Cottage with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
+exports.findOne = async (req, res) => {
 
-  Cottage.findByPk(id)
-    .then(data => {
-      if (data) {
-        res.send(data);
+  const id = req.params.id;
+  const error = "Hupsista! Mökkiä ei löytynyt.";
+  const reg = new RegExp('^[0-9]+$'); // a number or not
+  
+  if (reg.test(id)) {
+    await Cottage.sequelize.query(
+      'SELECT *, '+
+      'cottage.id AS "cottageId", '+
+      'city.id AS "cityId", '+
+      'region.id AS "regionId", '+
+      'city.name AS "cityName", '+
+      'region.name AS "regionName", '+
+      'cottage.name AS "cottageName" '+
+      'FROM cottage '+
+      'JOIN city ON "cityId" = city.id '+
+      'JOIN region ON "regionId" = region.id '+
+      'WHERE cottage.id = :id',
+      { replacements: { id: id }, type: QueryTypes.SELECT })
+    .then( (data, err) => {
+      if (data.length > 0) {
+        res.send({ cottage: data })
       } else {
-        res.status(404).send({
-          message: `Cannot find Cottage with id=${id}.`
-        });
+        res.send({ error })
       }
+      if (err) throw err;
     })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Cottage with id=" + id
-      });
-    });
+  } else {
+    res.send({ error })
+    console.log("Cottage not found.")
+  }
 };
 
 // Update a Cottage by the id in the request
