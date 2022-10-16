@@ -1,7 +1,7 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
-const { QueryTypes, INTEGER } = require('sequelize');
+const { QueryTypes } = require('sequelize');
 
 const Cottage = db.cottage;
 const Op = db.Sequelize.Op;
