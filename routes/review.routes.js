@@ -9,6 +9,9 @@ module.exports = app => {
   // Retrieve all Review
   router.get("/", review.findAll);
 
+  // Retrieve all Review by ID
+  router.get("/:id", review.findAllById);
+
   // Retrieve a single Review with id
   router.get("/:id", review.findOne);
 

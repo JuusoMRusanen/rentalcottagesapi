@@ -1,6 +1,8 @@
 //const db = require("../models/index.dev"); // DEVELOPMENT PATH
 const db = require("../models/index"); // PRODUCTION PATH
 
+const { QueryTypes } = require('sequelize');
+
 const Review = db.review;
 const Op = db.Sequelize.Op;
 
@@ -51,6 +53,21 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving reviews."
       });
     });
+};
+
+// Retrieve all reviews from the database by ID.
+exports.findAllById = async (req, res) => {
+
+  const id = req.params.id;
+
+  await Review.sequelize.query(
+    'SELECT * '+
+    'FROM review '+
+    'WHERE "cottageID" = :id ',
+    { replacements: { id: id }, type: QueryTypes.SELECT })
+  .then(data => {
+    res.send(data);
+  });
 };
 
 // Find a single Review with an id
