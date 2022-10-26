@@ -3,19 +3,22 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Create a new Cottage
+  // Create a new Photo
   router.post("/", photo.create);
+
+  // Retrieve all photo for a cottage
+  router.get("/:id", photo.findAllForCottage);
 
   // Retrieve all photo
   router.get("/", photo.findAll);
 
-  // Retrieve a single Cottage with id
+  // Retrieve a single Photo with id
   router.get("/:id", photo.findOne);
 
-  // Update a Cottage with id
+  // Update a Photo with id
   router.put("/:id", photo.update);
 
-  // Delete a Cottage with id
+  // Delete a Photo with id
   router.delete("/:id", photo.delete);
 
   // Delete all photo

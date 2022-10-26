@@ -33,6 +33,23 @@ exports.create = (req, res) => {
     });
 };
 
+// Retrieve photos for a cottage.
+exports.findAllForCottage = (req, res) => {
+
+  const cottageId = req.params.id;
+
+  Photo.findAll({ where: { cottageId: cottageId } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving photos."
+      });
+    });
+};
+
 // Retrieve all photos from the database.
 exports.findAll = (req, res) => {
 
