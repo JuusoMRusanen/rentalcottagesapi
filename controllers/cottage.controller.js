@@ -58,6 +58,50 @@ exports.findAll = async (req, res) => {
   });
 };
 
+// Retrieve all cottages by regionId
+exports.findAllByRegionId = async (req, res) => {
+
+  const regionId = req.params.id;
+
+  await Cottage.sequelize.query(
+    'SELECT *, '+
+    'cottage.id AS "cottageId", '+
+    'region.id AS "regionId", '+
+    'city.name AS "cityName", '+
+    'region.name AS "regionName", '+ 
+    'cottage.name AS "cottageName" '+ 
+    'FROM cottage '+
+    'JOIN city ON "cityId" = city.id '+
+    'JOIN region ON "regionId" = region.id '+
+    'WHERE "regionId" = :regionId',
+    { replacements:{ regionId: regionId }, type: QueryTypes.SELECT })
+  .then(data => {
+    res.send(data);
+  });
+};
+
+// Retrieve all cottages by cityId
+exports.findAllByCityId = async (req, res) => {
+
+  const cityId = req.params.id;
+
+  await Cottage.sequelize.query(
+    'SELECT *, '+
+    'cottage.id AS "cottageId", '+
+    'region.id AS "regionId", '+
+    'city.name AS "cityName", '+
+    'region.name AS "regionName", '+ 
+    'cottage.name AS "cottageName" '+ 
+    'FROM cottage '+
+    'JOIN city ON "cityId" = city.id '+
+    'JOIN region ON "regionId" = region.id '+
+    'WHERE "cityId" = :cityId',
+    { replacements:{ cityId: cityId }, type: QueryTypes.SELECT })
+  .then(data => {
+    res.send(data);
+  });
+};
+
 // Find a single Cottage with an id
 exports.findOne = async (req, res) => {
 
