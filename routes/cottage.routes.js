@@ -9,6 +9,12 @@ module.exports = app => {
   // Retrieve all cottage
   router.get("/", cottage.findAll);
 
+  // Retrieve all cottages with regionId
+  router.get("/region/:id", cottage.findAllByRegionId);
+
+  // Retrieve all cottages with regionId
+  router.get("/city/:id", cottage.findAllByCityId);
+
   // Retrieve a single Cottage with id
   router.get("/:id", cottage.findOne);
 
