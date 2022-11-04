@@ -7,17 +7,31 @@ const Cottage = db.cottage;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Cottage
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
+  let lastCottageId = 1;
+  
+  await Cottage.sequelize.query(
+    'SELECT '+
+    'cottage.id AS "cottageId" '+
+    'FROM cottage '+
+    'ORDER BY "cottageId" DESC '+
+    'LIMIT 1',
+    { type: QueryTypes.SELECT })
+  .then(data => {
+    lastCottageId = data[0].cottageId;
+  });
+
   // Create a Cottage
-  const Cottage = {
+  const cottage = {
+    id: lastCottageId + 1,
     cityId: req.body.cityId,
     name: req.body.name,
     bedrooms: req.body.bedrooms,
@@ -27,7 +41,7 @@ exports.create = (req, res) => {
   };
 
   // Save Cottage in the database
-  Cottage.create(Cottage)
+  await Cottage.create(cottage)
     .then(data => {
       res.send(data);
     })
