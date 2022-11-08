@@ -15,5 +15,9 @@ module.exports = (sequelize, Sequelize) => {
     priority: { 
       type: Sequelize.INTEGER
     }
-  });
+  },
+  { 
+    timestamps: false 
+  }
+  );
 };
