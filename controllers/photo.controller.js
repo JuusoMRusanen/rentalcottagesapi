@@ -4,101 +4,21 @@ const db = require("../models/index"); // PRODUCTION PATH
 const Photo = db.photo;
 const Op = db.Sequelize.Op;
 
-const formidable = require('formidable');
-const fs = require('fs');
-
 // Create and Save a new Photo
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
 
-  //console.log(req.body.selectedFile);
-
-  var form = new formidable.IncomingForm();
-
-  form.parse(req, function (err, fields, files) {
-
-    var oldpath = files.selectedFile.filepath;
-
-    var newpath = "/home/juurus/Github/rentalcottagesapi/public/photos/" + files.selectedFile.originalFilename;
-
-    // Read the file
-    fs.readFile(oldpath, function (err, data) {
-      if (err) throw err;
-      console.log('File read!');
-
-      // Write the file
-      fs.writeFile(newpath, data, function (err) {
-          if (err) throw err;
-          res.write('File uploaded and moved!');
-          res.end();
-          console.log('File written!');
-      });
-
-      // Delete the file
-      fs.unlink(oldpath, function (err) {
-          if (err) throw err;
-          console.log('File deleted!');
-      });
-    });
-
-  /* fs.rename(oldpath, newpath, function (err) {
-    if (err) throw err;
-    console.log('File uploaded and moved!');
-  }); */
-  
-  });
-  
-  /* try {
-    console.log(req.file);
-
-    if (req.file == undefined) {
-      return res.send(`You must select a file.`);
-    }
-
-    Photo.create({
-      type: req.file.mimetype,
-      name: req.file.originalname,
-      data: fs.readFileSync(
-        __basedir + "/public/photos/" + req.file.filename
-      ),
-    }).then((image) => {
-      fs.writeFileSync(
-        __basedir + "/public/tmp/" + image.name,
-        image.data
-      );
-
-      console.log(`File has been uploaded.`);
-    });
-  } catch (error) {
-    console.log(error);
-    return res.send(`Error when trying upload images: ${error}`);
-  }
-  
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
-  // Create a Photo
-  const Photo = {
-    src: req.body.src,
-    priority: req.body.priority,
+  const photo = {
+    id: res.id,
+    cottageId: res.cottageId,
+    src: res.src,
+    priority: res.priority,
   };
 
-  // Save Photo in the database
-  Photo.create(Photo)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Photo."
-      });
-    }); */
-};
+  await Photo.create(photo)
+  .catch(err => { 
+    console.log( "Error! : "+err ) 
+  })
+}
 
 // Retrieve photos for a cottage.
 exports.findAllForCottage = (req, res) => {
