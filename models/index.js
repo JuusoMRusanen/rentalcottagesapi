@@ -76,9 +76,43 @@ Review.belongsTo(Cottage)
 Cottage.hasMany(Photo)
 Photo.belongsTo(Cottage)
 
+// Read and remove all user uploaded images(not included by default) from the public folder
+function deleteUploadedImages(dirName) {
+
+  let defaultFiles = [];
+
+  // Generate default file names
+  for (let idx = 0; idx <= 14; idx++) {
+    defaultFiles.push(`${idx}.jpg`);
+  }
+
+  // Additional default files
+  defaultFiles.push("mokki0.png");
+
+  //console.log(defaultFiles);
+
+  fs.readdir(dirName, (err, allFiles) => {
+    if (err) {
+      onError(err);
+      return;
+    }
+    allFiles.forEach(allFile => {
+      if ( !defaultFiles.includes(allFile) ){
+        fs.unlink(dirName + allFile, (err) => {
+          if (err) throw err;
+          console.log(allFile + ' was deleted.');
+        });
+      }
+    });
+  });
+}
+
 // SYNC the database and insert mockdata
 //db.sequelize.sync(); // Doesn't remove former data
 db.sequelize.sync({ force: true }).then(() => { // Removes former data
+
+  // Delete user uploaded images
+  deleteUploadedImages(__dirname + '/../public/photos/')
 
   // Require mockdata
   const city = require("../mockdata/city.json")
