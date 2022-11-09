@@ -2,6 +2,7 @@
 const db = require("../models/index"); // PRODUCTION PATH
 const { QueryTypes } = require('sequelize');
 const multer = require("multer");
+const crypto = require('crypto');
 
 const Cottage = db.cottage;
 const Photo = db.photo;
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
 
-    cb(null, "cottagephoto" + '-' + Date.now() + ".jpg")
+    cb(null, "cottagephoto" + '-' + crypto.randomUUID() + ".jpg")
   }
 })
 
@@ -79,6 +80,7 @@ exports.create = async (req, res) => {
         
         req.files.forEach(file => {
           files.push(file);
+          console.log(file);
         })
         
         savePhotos(files);
@@ -129,7 +131,7 @@ exports.create = async (req, res) => {
           priority: idx,
         };
 
-        console.log(photo);
+        //console.log(photo);
 
         Photo.create(photo)
         .catch(err => { 
