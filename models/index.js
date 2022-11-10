@@ -59,12 +59,20 @@ db.Sequelize = Sequelize;
 
 module.exports = db;
 
+// Import mockdata
+const region = require("../mockdata/region.json")
+const city = require("../mockdata/city.json")
+const cottage = require("../mockdata/cottage.json")
+const photo = require("../mockdata/photo.json")
+const review = require("../mockdata/review.json")
+
 // List models
+const Region = db.sequelize.models.region;
 const City = db.sequelize.models.city;
 const Cottage = db.sequelize.models.cottage;
 const Photo = db.sequelize.models.photo;
-const Region = db.sequelize.models.region;
 const Review = db.sequelize.models.review;
+const Reservation = db.sequelize.models.reservation;
 
 // Associations
 Region.hasMany(City)
@@ -75,6 +83,8 @@ Cottage.hasMany(Review)
 Review.belongsTo(Cottage)
 Cottage.hasMany(Photo)
 Photo.belongsTo(Cottage)
+Cottage.hasMany(Reservation)
+Reservation.belongsTo(Cottage)
 
 // Read and remove all user uploaded images(not included by default) from the public folder
 function deleteUploadedImages(dirName) {
@@ -114,13 +124,6 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
   // Delete user uploaded images
   deleteUploadedImages(__dirname + '/../public/photos/')
 
-  // Require mockdata
-  const city = require("../mockdata/city.json")
-  const cottage = require("../mockdata/cottage.json")
-  const photo = require("../mockdata/photo.json")
-  const region = require("../mockdata/region.json")
-  const review = require("../mockdata/review.json")
-
   // Insert mockdata
   // CREATION ORDER MUST BE ACCORDING TO ASSOCIATIONS
   return(
@@ -142,11 +145,12 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
 });
 
 // Enable routes
+require("../routes/region.routes")(app);
 require("../routes/city.routes")(app);
 require("../routes/cottage.routes")(app);
 require("../routes/photo.routes")(app);
-require("../routes/region.routes")(app);
 require("../routes/review.routes")(app);
+require("../routes/reservation.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
