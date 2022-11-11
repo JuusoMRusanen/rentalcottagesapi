@@ -17,5 +17,6 @@
 {"id":"15","regionId":"3","name":"Kuopio"},
 {"id":"16","regionId":"12","name":"Lahti"},
 {"id":"17","regionId":"14","name":"Pori"},
-{"id":"18","regionId":"16","name":"Turku"}
+{"id":"18","regionId":"16","name":"Turku"},
+{"id":"19","regionId":"2","name":"Sotkamo"}
 ]
