@@ -7,8 +7,6 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Reservation
 exports.create = (req, res) => {
 
-  console.log(req.body)
-
   // Validate request
   if (!req.body.firstName) {
     res.status(400).send({

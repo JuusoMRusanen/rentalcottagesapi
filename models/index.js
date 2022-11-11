@@ -99,8 +99,6 @@ function deleteUploadedImages(dirName) {
   // Additional default files
   defaultFiles.push("mokki0.png");
 
-  //console.log(defaultFiles);
-
   fs.readdir(dirName, (err, allFiles) => {
     if (err) {
       onError(err);
@@ -110,7 +108,6 @@ function deleteUploadedImages(dirName) {
       if ( !defaultFiles.includes(allFile) ){
         fs.unlink(dirName + allFile, (err) => {
           if (err) throw err;
-          console.log(allFile + ' was deleted.');
         });
       }
     });
@@ -126,12 +123,13 @@ db.sequelize.sync({ force: true }).then(() => { // Removes former data
 
   // Insert mockdata
   // CREATION ORDER MUST BE ACCORDING TO ASSOCIATIONS
+  // Asyncronously create tables to ensure working associations
   return(
-    Region.bulkCreate(region),
-    City.bulkCreate(city),
-    Cottage.bulkCreate(cottage),
-    Photo.bulkCreate(photo),
-    Review.bulkCreate(review)
+    Region.bulkCreate(region).then(
+      () => City.bulkCreate(city).then(
+        () => Cottage.bulkCreate(cottage).then(
+          () => Photo.bulkCreate(photo).then(
+            () => Review.bulkCreate(review)))))
   );
 
 })

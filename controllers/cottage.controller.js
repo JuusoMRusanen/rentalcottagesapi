@@ -80,7 +80,6 @@ exports.create = async (req, res) => {
         
         req.files.forEach(file => {
           files.push(file);
-          console.log(file);
         })
         
         savePhotos(files);
