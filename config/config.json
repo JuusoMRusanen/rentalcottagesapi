@@ -19,21 +19,5 @@
     "define": {
       "freezeTableName": true
     }
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "rentalcottages",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "pool": {
-      "min": 2,
-      "2max": 10
-    },
-    "migrations": "sequelize_migrations",
-    "directory": "../migrations",
-    "define": {
-      "freezeTableName": true
-    }
   }
 }

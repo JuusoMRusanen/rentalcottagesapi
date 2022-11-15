@@ -25,30 +25,8 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// Serves resources from public folder 
+// Serves resources from public folder
 app.use(express.static(__dirname + '/../public'));
-
-/* const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
-  define: {
-    "freezeTableName": true
-  }
-}
-);
-
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  }); */
 
 // simple route 
 app.get("/", (req, res) => {
@@ -56,9 +34,9 @@ app.get("/", (req, res) => {
 });
 
 let sequelize;
-if (config.use_env_variable) {
-  console.log("Connecting in production enviroment...")
-  //sequelize = new Sequelize(process.env[config.use_env_variable], config); 
+if (env === "production") {
+  console.log("Connecting in " + env +  " environment")
+  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
     dialectOptions: {
@@ -70,15 +48,10 @@ if (config.use_env_variable) {
     define: {
       "freezeTableName": true
     }
-  });
-  sequelize.authenticate().then(() => {
-    console.log("Connection successful!")
-  }).catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
+  }
+  );
 } else {
-  console.log("Connecting in developement enviroment...")
+  console.log("Connecting in " + env +  " environment")
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   sequelize.authenticate().then(() => {
     console.log("Connection successful!")
@@ -101,8 +74,8 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;
 
