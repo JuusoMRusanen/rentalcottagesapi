@@ -10,7 +10,7 @@ const Op = db.Sequelize.Op;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, '/home/juurus/Github/rentalcottagesapi/public/photos/')
+      cb(null, __dirname + '/../public')
   },
   filename: function (req, file, cb) {
 
