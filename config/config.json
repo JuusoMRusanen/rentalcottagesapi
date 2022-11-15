@@ -15,7 +15,10 @@
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "define": {
+      "freezeTableName": true
+    }
   },
   "production": {
     "username": "root",
@@ -28,6 +31,9 @@
       "2max": 10
     },
     "migrations": "sequelize_migrations",
-    "directory": "../migrations"
+    "directory": "../migrations",
+    "define": {
+      "freezeTableName": true
+    }
   }
 }

@@ -28,34 +28,12 @@ app.use(express.urlencoded({ extended: true }));
 // Serves resources from public folder 
 app.use(express.static(__dirname + '/../public'));
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
-  define: {
-    "freezeTableName": true
-  }
-}
-);
-
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
 // simple route 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Rental Cottages." });
 });
 
-/* let sequelize;
+let sequelize;
 if (config.use_env_variable) {
   //sequelize = new Sequelize(process.env[config.use_env_variable], config);
   sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -67,6 +45,9 @@ if (config.use_env_variable) {
         require: true,
         rejectUnauthorized: false
       }
+    },
+    define: {
+      "freezeTableName": true
     }
   });
   sequelize.authenticate().then(() => {
@@ -80,7 +61,7 @@ if (config.use_env_variable) {
   sequelize.authenticate().then(() => {
     console.log("Connection successful!")
   })
-} */
+}
 
 fs
   .readdirSync(__dirname)
