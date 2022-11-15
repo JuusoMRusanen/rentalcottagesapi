@@ -118,10 +118,10 @@ exports.create = async (req, res) => {
             err.message || "Some error occurred while creating the Cottage."
         });
       })
-      
+
       return({ 
         lastCottageId:lastCottageId, 
-        lastPhotoId:lastPhotoId 
+        lastPhotoId:lastPhotoId
       })
     }).then(({ lastCottageId, lastPhotoId }) => {
       for (let idx = 0; idx < files.length; idx++) {
