@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/../public'));
 
 let sequelize;
 if (config.use_env_variable) {
-  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
     dialectOptions: {
@@ -45,7 +45,7 @@ if (config.use_env_variable) {
   }).catch(err => {
     console.error('Unable to connect to the database:', err);
   });
-  
+
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   sequelize.authenticate().then(() => {
