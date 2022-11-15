@@ -25,7 +25,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// Serves resources from public folder
+// Serves resources from public folder 
 app.use(express.static(__dirname + '/../public'));
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
