@@ -10,7 +10,7 @@ const Op = db.Sequelize.Op;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, __dirname + '/../public')
+      cb(null, __dirname + '/../public/photos/')
   },
   filename: function (req, file, cb) {
 
@@ -117,8 +117,13 @@ exports.create = async (req, res) => {
           message:
             err.message || "Some error occurred while creating the Cottage."
         });
-      });
+      })
       
+      return({ 
+        lastCottageId:lastCottageId, 
+        lastPhotoId:lastPhotoId 
+      })
+    }).then(({ lastCottageId, lastPhotoId }) => {
       for (let idx = 0; idx < files.length; idx++) {
 
         let file = files[idx]
