@@ -47,6 +47,11 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Rental Cottages." });
+});
+
 /* let sequelize;
 if (config.use_env_variable) {
   //sequelize = new Sequelize(process.env[config.use_env_variable], config);
