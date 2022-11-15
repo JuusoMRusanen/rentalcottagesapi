@@ -47,7 +47,7 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// simple route
+// simple route 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Rental Cottages." });
 });
