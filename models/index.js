@@ -28,6 +28,28 @@ app.use(express.urlencoded({ extended: true }));
 // Serves resources from public folder 
 app.use(express.static(__dirname + '/../public'));
 
+/* const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+  define: {
+    "freezeTableName": true
+  }
+}
+);
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  }); */
+
 // simple route 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Rental Cottages." });
@@ -35,11 +57,10 @@ app.get("/", (req, res) => {
 
 let sequelize;
 if (config.use_env_variable) {
-  //sequelize = new Sequelize(process.env[config.use_env_variable], config); 
+  console.log("Connecting in production enviroment...")
+  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
-    protocol: 'postgres',
-    logging:  true,
     dialectOptions: {
       ssl: {
         require: true,
@@ -57,6 +78,7 @@ if (config.use_env_variable) {
   });
 
 } else {
+  console.log("Connecting in developement enviroment...")
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   sequelize.authenticate().then(() => {
     console.log("Connection successful!")
