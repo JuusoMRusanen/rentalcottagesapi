@@ -14,7 +14,7 @@ const app = express();
 
 // cors origin depends on environment
 var corsOptions = { 
-  origin: process.env.NODE_ENV === "production" ? "https://rentalcottages.herokuapp.com" : "http://localhost:3000"
+  origin: process.env.NODE_ENV === "production" ? "https://rentalcottages.herokuapp.com" : "http://192.168.0.161:3000"
 };
 
 app.use(cors(corsOptions));
@@ -30,7 +30,16 @@ app.use(express.static(__dirname + '/../public'));
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  process.env.DATABASE_URL, {
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  }
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   sequelize.authenticate().then(() => {
