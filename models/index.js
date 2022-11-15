@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/../public'));
 
 let sequelize;
 if (config.use_env_variable) {
-  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
   process.env.DATABASE_URL, {
     dialect: "postgres",
     dialectOptions: {
