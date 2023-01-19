@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "juurus",
-    "password": null,
+    "username": "yourusername",
+    "password": "yourpassword",
     "database": "rentalcottages",
     "host": "localhost",
     "dialect": "postgres",
