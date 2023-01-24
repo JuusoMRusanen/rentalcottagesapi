@@ -5,8 +5,8 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-// const config = require(__dirname + '/../config/config.json')[env]; // Require database credintials from a local config file
-const config = require(__dirname + '/../configer')[env]; // Require database credintials from a secret file
+const config = require(__dirname + '/../config/config.json')[env]; // Require database credintials from a local config file
+//const config = require(__dirname + '/../configer')[env]; // Require database credintials from a secret file
 const db = {};
 
 const express = require("express");
