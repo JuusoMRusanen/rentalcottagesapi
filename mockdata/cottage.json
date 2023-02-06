@@ -996,7 +996,7 @@
 {"id":"995","cityId":"4","name":"tempor","bedrooms":"3","bathrooms":"2","price":"715","size":"112"},
 {"id":"996","cityId":"8","name":"suscipit nulla","bedrooms":"2","bathrooms":"3","price":"878","size":"197"},
 {"id":"997","cityId":"13","name":"turpis a","bedrooms":"4","bathrooms":"1","price":"651","size":"74"},
-{"id":"998","cityId":"0","name":"ut tellus","bedrooms":"3","bathrooms":"1","price":"454","size":"75"},
-{"id":"999","cityId":"15","name":"est congue","bedrooms":"4","bathrooms":"3","price":"597","size":"98"},
-{"id":"1000","cityId":"10","name":"nullam porttitor","bedrooms":"2","bathrooms":"3","price":"904","size":"58"}
+{"id":"998","cityId":"19","name":"ut tellus","bedrooms":"3","bathrooms":"1","price":"454","size":"75"},
+{"id":"999","cityId":"19","name":"est congue","bedrooms":"4","bathrooms":"3","price":"597","size":"98"},
+{"id":"1000","cityId":"19","name":"nullam porttitor","bedrooms":"2","bathrooms":"3","price":"904","size":"58"}
 ]
